@@ -10,5 +10,5 @@ object ReflectingTest extends App {
 
   println(evalMethod(List(5,6,7,8), "$colon$colon", 2)) //List(2,5,6,7,8)
 
-  println(publicMethods[String])
+  println(publicMethods[List[_]])
 }
