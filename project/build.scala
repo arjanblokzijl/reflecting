@@ -21,7 +21,4 @@ object ReflectBuild extends Build {
     libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-compiler" % _),
     libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-reflect" % _)
   )
-
-  val key = AttributeKey[Boolean]("javaOptionsPatched")
-
 }

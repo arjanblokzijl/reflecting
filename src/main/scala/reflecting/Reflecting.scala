@@ -10,15 +10,17 @@ import reflect.ClassTag
 object Reflecting {
   val tb = m.mkToolBox()
 
-  val list = List(1,2,3,4,5)
-
-  val il: InstanceMirror = m.reflect(list)
-
-  def eval[T : ClassTag : TypeTag](obj: T, name: String, arg0: Any, args: Any*) = {
+  def evalMethod[T : ClassTag : TypeTag](obj: T, name: String, arg0: Any, args: Any*) = {
     m.reflect(obj).reflectMethod(u.typeOf[T].member(u.newTermName(name)).asMethod).apply((arg0 +: args): _*)
   }
 
-  def eval[T : ClassTag : TypeTag](obj: T, name: String) =
+  def evalMethod[T : ClassTag : TypeTag](obj: T, name: String) =
     m.reflect(obj).reflectMethod(u.typeOf[T].member(u.newTermName(name)).asMethod).apply()
 
+  def publicMethods[T : TypeTag]: Iterable[(MethodSymbol, Type)] = {
+    val tType: Type = u.typeOf[T]
+    tType.declarations.sorted.collect {
+      case m: MethodSymbol if (m.isPublic && m.isMethod) => m -> m.typeSignatureIn(tType)
+    }
+  }
 }
