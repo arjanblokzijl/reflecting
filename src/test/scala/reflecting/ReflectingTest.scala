@@ -1,14 +1,19 @@
 package reflecting
 
 
+
 object ReflectingTest extends App {
   import Reflecting._
 
-  println(evalMethod(List(5,6,7,8), "head")) //5
+  val l = (1 to 5).toList
 
-  println(evalMethod(List(5,6,7,8), "drop", 2)) //List(7,8)
+  println("head " + evalMethod(l, "head")) //1
 
-  println(evalMethod(List(5,6,7,8), "$colon$colon", 2)) //List(2,5,6,7,8)
+  println("drop " + evalMethod(l, "drop", 2)) //List(3,4,5)
+
+  println("map " + evalMethod(l, "map", ((x: Int) => x + 1), Seq.canBuildFrom[Int])) //List(2,3,4,5,6)
+
+  println(":: " + evalMethod(l, "$colon$colon", 6)) //List(6,1,2,3,4,5)
 
   println(publicMethods[List[_]])
 }
