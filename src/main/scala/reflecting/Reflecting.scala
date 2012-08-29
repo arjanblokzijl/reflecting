@@ -19,7 +19,7 @@ object Reflecting {
   def publicMethods[T : TypeTag]: Iterable[(MethodSymbol, Type)] = {
     val tType: Type = u.typeOf[T]
     tType.declarations.sorted.collect {
-      case m: MethodSymbol if (m.isPublic && m.isMethod && !m.isConstructor) => m -> m.typeSignatureIn(tType)
+      case m: MethodSymbol if (m.isPublic && m.isMethod && !m.isConstructor) => m -> m.typeSignatureIn(tType)//m.isMethod alone seems not enough
     }
   }
 }

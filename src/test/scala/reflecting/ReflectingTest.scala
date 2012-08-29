@@ -16,4 +16,8 @@ object ReflectingTest extends App {
   println(":: " + evalMethod(l, "$colon$colon", 6)) //List(6,1,2,3,4,5)
 
   println(publicMethods[List[_]])
+
+  val e1 = tb.parseExpr("1 to 3 map (_+1)")
+  println("e1: "  + tb.runExpr(e1))
+
 }
