@@ -1,6 +1,8 @@
 package reflecting
 
-
+import scala.reflect.runtime.universe._
+import scala.reflect.runtime.universe.{build => ub}
+import scala.tools.reflect._
 
 object ReflectingTest extends App {
   import Reflecting._
@@ -19,5 +21,12 @@ object ReflectingTest extends App {
 
   val e1 = tb.parseExpr("1 to 3 map (_+1)")
   println("e1: "  + tb.runExpr(e1))
+
+  val expr = tb.parseExpr("1 + 2")
+
+  println("raw expr: " + showRaw(expr))
+
+  val onePlusTwo = Apply(Select(Literal(Constant(1)), newTermName("$plus")), List(Literal(Constant(2)))) //same, but building it up explicitly
+  println("onePlusTwo: " + tb.runExpr(onePlusTwo)) //3
 
 }
